@@ -1,6 +1,6 @@
 require 'pry'
 class Person
-    attr_accessor :bank_account
+    attr_accessor :bank_account, :happiness, :hygiene
 
     attr_reader :name
 
@@ -10,24 +10,13 @@ class Person
         @happiness = 8
         @hygiene = 8
     end
-
+    
     def happiness
-        @happiness
-        @happiness.clamp(0, 10)
-    end    
-
-    
-    def happiness=(happiness)
-        @happiness = happiness
+        @happiness.clamp(0, 10)       
     end
-
+    
     def hygiene
-        @hygiene
         @hygiene.clamp(0, 10)
-    end
-    
-    def hygiene=(hygiene)
-        @hygiene = hygiene
     end
 
     def clean?
@@ -53,36 +42,31 @@ class Person
 
     def take_bath
         @hygiene = @hygiene + 4
-        self.hygiene=(@hygiene)
         return "♪ Rub-a-dub just relaxing in the tub ♫"
     end
 
     def work_out
         @happiness = @happiness + 2 
         @hygiene = @hygiene - 3
-        self.happiness=(@happiness)
-        self.hygiene=(@hygiene)
         return "♪ another one bites the dust ♫"
     end
 
     def call_friend(friend)
         new_friend = Person.new(friend)
         @happiness = @happiness + 3
-        friend.happiness = friend.happiness + 3
-        self.happiness=(@happiness)
-        return "Hi #{friend.name}! It's #{self.name}. How are you?"
+        #still need to figure out how to run happiness method to make sure number is less than 0 or greater than 10
+        new_friend.happiness = self.happiness + 3
+        return "Hi #{new_friend.name}! It's #{self.name}. How are you?"
     end
 
     def start_conversation(person, topic)
         if topic == "politics"
+            #both people get sadder
             @happiness = @happiness - 2
-            self.happiness=(@happiness)
-            person.happiness = person.happiness - 2
             return "blah blah partisan blah lobbyist"
         elsif topic == "weather"
             @happiness = @happiness + 1
-            self.happiness=(@happiness)
-            person.happiness = person.happiness + 1
+            #both people get happier
             return "blah blah sun blah rain"
         else
             return "blah blah blah blah blah"
